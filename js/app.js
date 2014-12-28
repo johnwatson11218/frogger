@@ -27,6 +27,8 @@ Enemy.prototype.render = function() {
 
 var Player = function(){
     this.sprite = 'images/char-boy.png';
+    this.x = 2*101;
+    this.y = 5*83;
 }
 
 Player.prototype.update = function( dt ){
@@ -34,11 +36,23 @@ Player.prototype.update = function( dt ){
 }
 
 Player.prototype.render = function(){
+        ctx.drawImage(Resources.get( this.sprite), this.x, this.y  );
+        var delta = Math.random();
+        //this.x += delta; this.y += delta;
 
 }
 
 Player.prototype.handleInput = function( key ){
-    console.log( "calling prototype.handleinput " + key );
+
+    // key will be one of up, down, left, right,
+    if( key == 'up' && this.y >= 83)
+        this.y -= 83;
+    if( key == 'down' && this.y < 5*83 )
+        this.y += 83;
+    if( key == 'left' && this.x >= 101)
+        this.x -= 101;
+    if( key == 'right' && this.x < 4*101 )
+        this.x += 101;  
 }
 
 // Now instantiate your objects.
