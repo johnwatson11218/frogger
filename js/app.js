@@ -6,6 +6,11 @@ var Enemy = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+    var rand = Math.random();
+    this.x = -50 - rand*150;
+    this.y = Math.floor(1 + rand*3 )*83;
+
+    this.speed = rand * 100;
 }
 
 // Update the enemy's position, required method for game
@@ -14,6 +19,9 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+
+    console.log( 'in the enemy.update()')
+    this.x += this.speed*dt;
 }
 
 // Draw the enemy on the screen, required method for game
@@ -60,7 +68,11 @@ Player.prototype.handleInput = function( key ){
 // Place the player object in a variable called player
 var player = new Player();
 var allEnemies = []
-
+allEnemies.push( new Enemy());
+allEnemies.push( new Enemy());
+allEnemies.push( new Enemy());
+allEnemies.push( new Enemy());
+allEnemies.push( new Enemy());
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
