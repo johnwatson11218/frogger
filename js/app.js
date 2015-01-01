@@ -5,12 +5,14 @@ var Enemy = function() {
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bug.png';
+    //this.sprite = 'images/enemy-bug.png';
+      this.sprite = 'images/enemy-bug.png';
     var rand = Math.random();
     this.x = -50 - rand*150;
-    this.y = Math.floor(1 + rand*3 )*83;
+    this.y = Math.floor(1 + rand*3 )*83 - 23;
 
     this.speed = rand * 100;
+    this.rand = rand;
 }
 
 // Update the enemy's position, required method for game
@@ -20,13 +22,21 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
 
-    console.log( 'in the enemy.update()')
     this.x += this.speed*dt;
+
+    // check and see if this enemy is off the screen, if so reset it back to the left side of the screen
+    if( this.x > 505 ){
+        this.x = -50 - this.rand*150;
+    }
 }
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    /*
+    ctx.rect( this.x, this.y , 100, 100 );
+    ctx.stroke();
+    */
 }
 
 // Now write your own player class
@@ -36,7 +46,7 @@ Enemy.prototype.render = function() {
 var Player = function(){
     this.sprite = 'images/char-boy.png';
     this.x = 2*101;
-    this.y = 5*83;
+    this.y = 5*83 - 10 ;
 }
 
 Player.prototype.update = function( dt ){
@@ -53,9 +63,9 @@ Player.prototype.render = function(){
 Player.prototype.handleInput = function( key ){
 
     // key will be one of up, down, left, right,
-    if( key == 'up' && this.y >= 83)
+    if( key == 'up' && this.y >= 0)
         this.y -= 83;
-    if( key == 'down' && this.y < 5*83 )
+    if( key == 'down' && this.y < 4*83 )
         this.y += 83;
     if( key == 'left' && this.x >= 101)
         this.x -= 101;
