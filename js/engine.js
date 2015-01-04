@@ -85,7 +85,39 @@ var Engine = (function(global) {
 
 
     function checkCollisions(){
-        console.log( "checking collisions ")
+        //console.log( "checking collisions ")
+        // find out what row the player is on ...
+        var playerRow = player.rowNumber();
+
+        // now make a list of all the enemies that are that same row
+        var candidates = [];
+        for( var e in allEnemies ){
+            var enemy  = allEnemies[e];
+            if( enemy.row === playerRow ){
+                candidates.push( enemy );
+            }
+        }
+
+        //console.log( "the candidates are " + candidates );
+        // the bug and the player image are both 101 pix wide. 
+        // find out if the player intersects any of the bug images in the candidate list
+        var collide = false;
+        for( var e in candidates ){
+            var candidate = candidates[e];
+            // bug on left and intersecting?
+            collide = checkLowerBounds( candidate, player ) || checkLowerBounds( player, candidate );
+                        
+        }
+
+        //console.log( collide );
+        if( collide ) {
+            player = new Player();
+        }
+
+    }
+
+    function checkLowerBounds( left , right ) {
+        return left.x < right.x && left.x + 101 > right.x;
     }
 
     /* This is called by the update function  and loops through all of the

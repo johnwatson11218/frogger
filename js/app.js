@@ -6,11 +6,11 @@ var Enemy = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     //this.sprite = 'images/enemy-bug.png';
-      this.sprite = 'images/enemy-bug.png';
+    this.sprite = 'images/enemy-bug.png';
     var rand = Math.random();
     this.x = -50 - rand*150;
     this.y = Math.floor(1 + rand*3 )*83 - 23;
-
+    this.row = Math.floor( 1 + rand*3 );
     this.speed = rand * 100;
     this.rand = rand;
 }
@@ -38,6 +38,7 @@ Enemy.prototype.render = function() {
     ctx.stroke();
     */
 }
+
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -71,6 +72,10 @@ Player.prototype.handleInput = function( key ){
         this.x -= 101;
     if( key == 'right' && this.x < 4*101 )
         this.x += 101;  
+}
+
+Player.prototype.rowNumber = function(){
+    return Math.floor(  ( this.y + 10 ) / 83 );
 }
 
 // Now instantiate your objects.
