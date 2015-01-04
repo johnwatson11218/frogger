@@ -81,6 +81,10 @@ var Engine = (function(global) {
     function update(dt) {
         updateEntities(dt);
         checkCollisions();
+        // check to see if the player made it across the board
+        if( player.rowNumber() === 0 ){
+            player = new Player()
+        }
     }
 
 
